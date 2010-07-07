@@ -22,10 +22,16 @@
 
 DIRS=src 
 
-all:
+.PHONY: deps
+
+all: deps
 	for D in $(DIRS) ; do \
 	(cd $$D; ${MAKE}) ; \
 	done
+
+deps:
+	@./bootstrap.sh
+
 clean:
 	for D in $(DIRS) ; do \
 	(cd $$D; ${MAKE} clean) ; \
