@@ -38,11 +38,12 @@ EQC_ERL = erl -pz ../ebin -pz $(EQC)/ebin -pz ./Unit-Quick-Files -kernel error_l
 
 SOURCES = $(wildcard *.erl)
 
-beams = gproc.beam \
+beams = gen_leader.beam \
+	gproc.beam \
 	gproc_app.beam \
 	gproc_dist.beam \
 	gproc_lib.beam \
-	gproc_sup.beam
+	gproc_sup.beam 
 
 all : $(beams)
 clean :

@@ -1,4 +1,3 @@
 *.beam
 current_counterexample.eqc
 deps
-src/gen_leader.erl

@@ -20,17 +20,12 @@
 ## FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ## DEALINGS IN THE SOFTWARE.
 
-DIRS=src 
+DIRS=src
 
-.PHONY: deps
-
-all: deps
+all:
 	for D in $(DIRS) ; do \
 	(cd $$D; ${MAKE}) ; \
 	done
-
-deps:
-	@./bootstrap.sh
 
 clean:
 	for D in $(DIRS) ; do \
