@@ -9,6 +9,7 @@
   {id, "GPROC"},
   {modules, [
 	     %% TODO: fill in this list, perhaps
+	     gen_leader, gproc, gproc_app, gproc_dist, gproc_init, gproc_lib, gproc_sup
             ]
   },
   {registered, [ ] },
