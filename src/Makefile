@@ -34,7 +34,7 @@ ERLC += +debug_info
 EQC ?= /host/dev/eqc-1.16
 
 EQC_ERLC = $(ERLC) -I $(EQC)/include
-EQC_ERL = erl -pz ../ebin -pz $(EQC)/ebin -pz ../test/Unit-Quick-Files -kernel error_logger silent -sasl errlog_type error
+EQC_ERL = erl -pz ../ebin -pz $(EQC)/ebin -pz ../eqc_test/Unit-Quick-Files -kernel error_logger silent -sasl errlog_type error
 
 SOURCES = $(wildcard *.erl)
 
@@ -46,16 +46,16 @@ beams = gproc.beam \
 
 all : $(beams)
 clean :
-	rm -f  *~ ../ebin/*.beam ../test/Unit-Quick-Files/*.beam
+	rm -f  *~ ../ebin/*.beam ../eqc_test/Unit-Quick-Files/*.beam
 
 ## erlc targets
 $(beams) : %.beam : %.erl
 	$(ERLC) $<
 
-./Unit-Quick-Files/gproc_eqc.beam : ../test/Unit-Quick-Files/gproc_eqc.erl
+./Unit-Quick-Files/gproc_eqc.beam : ../eqc_test/Unit-Quick-Files/gproc_eqc.erl
 	$(EQC_ERLC) $<
 
-./Unit-Quick-Files/gproc_pulse.beam : ../test/Unit-Quick-Files/gproc_pulse.erl
+./Unit-Quick-Files/gproc_pulse.beam : ../eqc_test/Unit-Quick-Files/gproc_pulse.erl
 	$(EQC_ERLC) $<
 
 doc: ../doc/edoc-info
@@ -64,11 +64,11 @@ doc: ../doc/edoc-info
 	erl -noshell -eval 'edoc:application($(APP),"..",[])' -s init stop
 
 ## test targets
-test : all ../test/Unit-Quick-Files/gproc_eqc.beam
+test : all ../eqc_test/Unit-Quick-Files/gproc_eqc.beam
 	$(EQC_ERL) -s gproc_eqc run -s erlang halt
 
-itest : all ../test/Unit-Quick-Files/gproc_eqc.beam
+itest : all ../eqc_test/Unit-Quick-Files/gproc_eqc.beam
 	$(EQC_ERL) -s eqc start
 
-pulsetest : all ../test/Unit-Quick-Files/gproc_pulse.beam
+pulsetest : all ../eqc_test/Unit-Quick-Files/gproc_pulse.beam
 	$(EQC_ERL) -pa ../../scheduler_msg -pa -s eqc start
