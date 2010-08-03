@@ -1,2 +1,3 @@
 *.beam
+deps
 current_counterexample.eqc
