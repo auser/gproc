@@ -40,14 +40,20 @@ init(_Args) ->
     GProc =
         {gproc, {gproc, start_link, []},
          permanent, 2000, worker, [gproc]},
-    
+
     Dist = case application:get_env(gproc_dist) of
-	       undefined -> [];
-	       {ok, false} -> [];
-	       {ok, Env} ->
-		   [{gproc_dist, {gproc_dist, start_link, [Env]},
-		     permanent, 2000, worker, [gproc_dist]}]
-	   end,
+               undefined -> [];
+               {ok, false} -> [];
+               {ok, Env} ->
+                   case Env of
+                       [Nodes, Opts] when is_list(Nodes), is_list(Opts) ->
+                           Arg = {Nodes,Opts};
+                       Other ->
+                           Arg = Other
+                   end,
+                   [{gproc_dist, {gproc_dist, start_link, [Arg]},
+                     permanent, 2000, worker, [gproc_dist]}]
+           end,
     {ok,{{one_for_one, 15, 60}, [GProc | Dist]}}.
 
 
