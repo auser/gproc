@@ -12,7 +12,8 @@
              gproc_dist,
              gproc_init,
              gproc_lib,
-             gproc_sup]
+             gproc_sup,
+             gen_leader]
   },
   {registered, [ ] },
   %% NOTE: do not list applications which are load-only!
