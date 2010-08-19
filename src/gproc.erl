@@ -1169,7 +1169,7 @@ qlc_next(_, '$end_of_table') -> [];
 qlc_next(Scope, K) ->
     case ets:lookup(?TAB, K) of
         [{{Key,_}, Pid, V}] ->
-            [{Key,Pid,V} | fun() -> qlc_next(Scope, next(Scope, K)) end];
+            [{Key,Pid,V}] ++ fun() -> qlc_next(Scope, next(Scope, K)) end;
         [] ->
             qlc_next(Scope, next(Scope, K))
     end.
@@ -1178,7 +1178,7 @@ qlc_prev(_, '$end_of_table') -> [];
 qlc_prev(Scope, K) ->
     case ets:lookup(?TAB, K) of
         [{{Key,_},Pid,V}] ->
-            [{Key,Pid,V} | fun() -> qlc_prev(Scope, prev(Scope, K)) end];
+            [{Key,Pid,V}] ++ fun() -> qlc_prev(Scope, prev(Scope, K)) end;
         [] ->
             qlc_prev(Scope, prev(Scope, K))
     end.
