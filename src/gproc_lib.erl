@@ -72,14 +72,14 @@ insert_many(T, C, KVL, Pid) ->
             ets:insert(?TAB, RevObjs),
             {true, Objs};
         false ->
-            Existing = [{Obj, ets:lookup(?TAB, K)} || {K,_,_} = Obj <- Objs],
+            Existing = [{Obj, ets:lookup(?TAB, K)} || {{K,_},_} = Obj <- Objs],
             case lists:any(fun({_, [{_,L}]}) -> is_list(L);
                               (_) -> false
                            end, Existing) of
-                [_|_] ->
+                true ->
                     insert_objects(Existing);
-                [] ->
-                    false
+		false ->
+		    false
             end
     end.
 
